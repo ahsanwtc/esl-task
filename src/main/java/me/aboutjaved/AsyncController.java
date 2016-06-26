@@ -18,18 +18,35 @@ import java.util.*;
 
 import static java.lang.String.format;
 
+/**
+ * Controller class
+ */
+
 @RestController
 class AsyncController {
 
+    /**
+     * Injection of CupListService service.
+     */
     @Autowired
     private CupListService cupListService;
 
+    /**
+     * Listens to the HTTP GET and schedules the API calls asynchronously. The calls are asynchronous, a
+     * DeferredResult is being returned.
+     *
+     * Web Service entry point @ "/". http://localhost:8080
+     *
+     *
+     * @return DeferredResult
+     */
     @RequestMapping("/")
     DeferredResult<?> esl() {
-        //final DeferredResult<List<CupList>> result = new DeferredResult<>();
         final DeferredResult<Map<String, TeamResult>> result = new DeferredResult<>();
 
+        /* calling the service to fetch the list of the cups. */
         ListenableFuture<ResponseEntity<Map<String, CupList>>> future = cupListService.getCups();
+        /* adding callbacks to trigger when request completes. */
         future.addCallback(new ListenableFutureCallback<ResponseEntity<Map<String, CupList>>>() {
             @Override
             public void onFailure(Throwable throwable) {
@@ -39,24 +56,28 @@ class AsyncController {
             @Override
             public void onSuccess(ResponseEntity<Map<String, CupList>> cupListResponseEntity) {
                 log("Success");
+                /* list to keep track of single cup requests. */
                 List<CupList> cupList = new ArrayList<CupList>();
 
+                /* response map of the initial call. */
                 Map<String, CupList> map = cupListResponseEntity.getBody();
-                List<Cup> c = new ArrayList<Cup>();
 
+                /* end map which will be sent in the response. */
                 Map<String, TeamResult> teamResultMap = new HashMap<>();
-                //Map<String, Boolean> requesMap = new HashMap<>();
                 for(Map.Entry<String, CupList> entry: map.entrySet()) {
+                    /* adding cup to the list to mark it as running. */
                     cupList.add(entry.getValue());
+
+                    /* calling the service to fetch a cup. */
                     ListenableFuture<ResponseEntity<Cup>> newFuture = cupListService.getCup(entry.getValue().getId(),
                             entry.getValue().getContestant().getCheckedIn());
-                    //requesMap.put(Integer.toString(entry.getValue().getId()), false);
+
 
                     newFuture.addCallback(new ListenableFutureCallback<ResponseEntity<Cup>>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-                            //result.setErrorResult(throwable.getMessage());
                             log("Error: " + throwable.getMessage());
+                            /* removing cup from the list to mark it as done. */
                             cupList.remove(entry.getValue());
                         }
 
@@ -83,6 +104,7 @@ class AsyncController {
                                     teamResultMap.put(key, new TeamResult(r.getTeam().getId(), r.getPosition(), r.getPosition(), 1));
                                 }
                             }
+                            /* removing cup from the list to mark it as done. */
                             cupList.remove(entry.getValue());
                         }
                     });
@@ -97,7 +119,7 @@ class AsyncController {
                         e.printStackTrace();
                     }
                 }
-
+                /* set the result which will mark it done and send the response to the client. */
                 result.setResult(teamResultMap);
 
                 System.out.print("-----------------------------------------------------------------------------");

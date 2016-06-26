@@ -4,21 +4,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by jsan on 6/26/2016.
+ * Class for serializing the response.
+ *
+ * Created by jsan on 6/24/2016.
  */
 public class TeamResult {
+
+    /**
+     * Id of the Team.
+     */
     @JsonIgnore
     private int id;
 
+    /**
+     * Number of cups played by the team.
+     */
     @JsonProperty("cupsPlayed")
     private int cupsPlayed;
 
+    /**
+     * Overall best position achieved by the team.
+     */
     @JsonProperty("bestPosition")
     private int bestPosition;
 
+    /**
+     * Overall worst position achieved by the team.
+     */
     @JsonProperty("worstPosition")
     private int worstPosition;
 
+    /**
+     * Constructor
+     *
+     * @param id
+     * @param worstPosition
+     * @param bestPosition
+     * @param cupsPlayed
+     */
     public TeamResult(int id, int worstPosition, int bestPosition, int cupsPlayed) {
         this.id = id;
         this.worstPosition = worstPosition;

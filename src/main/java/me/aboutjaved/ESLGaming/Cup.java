@@ -6,12 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
+ *  Deserialization class for Cup.
+ *
  * Created by jsan on 6/25/2016.
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Cup {
 
+    /**
+     * List of ranking in the cup.
+     */
     @JsonProperty("ranking")
     private List<Ranking> ranking;
 
