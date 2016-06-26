@@ -59,7 +59,6 @@ After running the boot, the service will be available at `http://localhost:8080`
     "bestPosition": 7,
     "worstPosition": 41
   }
-  
   ...
  }
 ```
