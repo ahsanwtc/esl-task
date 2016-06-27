@@ -13,7 +13,6 @@ The project one main package `me.aboutjaved` and two sub packages `ESLGaming` an
     |-- pom.xml
     |-- .gitignore
     |-- LICENSE.rst
-    |-- package.json
     |-- src
         |-- java/me/aboutjaved
             |-- ESLGaming
@@ -30,9 +29,12 @@ The project one main package `me.aboutjaved` and two sub packages `ESLGaming` an
             |-- AsyncController.java
 The `ESLGaming` package contains classes for serialization and deserialization of data. `Service` package deals with the calling of the API.
 
+### Assumptions
+Following assumptions are taken while working on this project:
+1. The end result is required to be a JSON object, the service was assumed to be a web service.
+2. The significance of `teamSize` wasn't clear from the problem statement, it wasn't used in the calculations.
 ### Version
 1.0
-
 ### Tech
 * [JAVA] - JAVA 1.8
 * [Maven] - Maven project manager.
@@ -61,6 +63,7 @@ After running the boot, the service will be available at `http://localhost:8080`
   }
  }
 ```
+
 
 License
 ----
