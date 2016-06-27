@@ -31,8 +31,10 @@ The `ESLGaming` package contains classes for serialization and deserialization o
 
 ### Assumptions
 Following assumptions are taken while working on this project:
+
 1. The end result is required to be a JSON object, the service was assumed to be a web service.
 2. The significance of `teamSize` wasn't clear from the problem statement, it wasn't used in the calculations.
+
 ### Version
 1.0
 ### Tech
