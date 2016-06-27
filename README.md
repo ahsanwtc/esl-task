@@ -45,7 +45,7 @@ Following assumptions are taken while working on this project:
 ### Installation and Usage
 ESL Task requires [Spring-Boot](https://spring.io/) v1.3.5 to run. Dependencies are managed via maven, so you just need to use `mvn`:
 * Clone the repo: `git clone git@github.com:ahsanwtc/esl-task.git`
-* Go into the directory: `cd esltask`
+* Go into the directory: `cd esl-task`
 * Build the project and dependencies: `mvn clean`
 * Start the Spring-Boot to run the applicaiton: `mvn spring-boot:run`
 * Visit `http://localhost:8080` to view service.
